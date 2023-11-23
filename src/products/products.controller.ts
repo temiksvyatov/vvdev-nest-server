@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Put, Param, Delete, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete, NotFoundException, Query } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { Product } from './entities/product.entity';
 //import { CreateProductDto } from './dto/create-product.dto';
@@ -10,8 +10,11 @@ export class ProductsController {
 
   //get all products
   @Get()
-  async findAll(): Promise<Product[]> {
-    return this.productsService.findAll();
+  getProducts(
+    @Query('page') page: number,
+    @Query('limit') limit: number,
+  ): Promise<{ data: Product[]; total: number; page: number; limit: number, links: any }> {
+    return this.productsService.findAll(page, limit);
   }
 
   //get product by id
