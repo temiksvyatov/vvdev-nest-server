@@ -1,16 +1,16 @@
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProductsModule } from './products/products.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule } from '@nestjs/config';
-
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     ProductsModule,
-    TypeOrmModule.forRoot({type: process.env.DB_TYPE as any,
+    TypeOrmModule.forRoot({
+      type: process.env.DB_TYPE as any,
       host: process.env.PG_HOST,
       port: parseInt(process.env.PG_PORT),
       username: process.env.PG_USER,
@@ -18,7 +18,7 @@ import { ConfigModule } from '@nestjs/config';
       database: process.env.PG_DB,
       entities: ['dist/**/*.entity{.ts,.js}'],
       migrations: ['dist/src/db/migrations/*{.ts,.js}'],
-      migrationsTableName: 'migrations_typeorm'
+      migrationsTableName: 'migrations_typeorm',
     }),
   ],
   controllers: [AppController],

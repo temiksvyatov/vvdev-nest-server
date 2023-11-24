@@ -1,18 +1,18 @@
-import { Exclude } from "class-transformer";
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Exclude } from 'class-transformer';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
 export class Product {
-    @PrimaryGeneratedColumn()
-    @Exclude()
-    id: number;
+  @PrimaryGeneratedColumn()
+  @Exclude()
+  id: number;
 
-    @Column()
-    name: string;
+  @Column()
+  name: string;
 
-    @Column()
-    price: number;
+  @Column()
+  price: number;
 
-    @Column()
-    quantity: number;
+  @Column()
+  quantity: number;
 }

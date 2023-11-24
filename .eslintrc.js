@@ -7,6 +7,7 @@ module.exports = {
   },
   plugins: ['@typescript-eslint/eslint-plugin'],
   extends: [
+    'vvdev/node',
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
   ],

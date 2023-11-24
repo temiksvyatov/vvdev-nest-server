@@ -1,10 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm/dist';
 import { Repository } from 'typeorm';
-//import { CreateProductDto } from './dto/create-product.dto';
-//import { UpdateProductDto } from './dto/update-product.dto';
+// import { CreateProductDto } from './dto/create-product.dto';
+// import { UpdateProductDto } from './dto/update-product.dto';
 import { Product } from './entities/product.entity';
-
 
 @Injectable()
 export class ProductsService {
@@ -12,18 +11,28 @@ export class ProductsService {
     @InjectRepository(Product)
     private productRepository: Repository<Product>,
   ) {}
-  
+
   createPaginationLinks(page: number, limit: number, total: number) {
     const totalPages = Math.ceil(total / limit);
     return {
       first: `/products?page=1&limit=${limit}`,
       prev: page > 1 ? `/products?page=${page - 1}&limit=${limit}` : null,
-      next: page < totalPages ? `/products?page=${page + 1}&limit=${limit}` : null,
+      next:
+        page < totalPages ? `/products?page=${page + 1}&limit=${limit}` : null,
       last: `/products?page=${totalPages}&limit=${limit}`,
     };
-}
+  }
 
-  async findAll(page = 1, limit = 10): Promise<{ data: Product[]; total: number; page: number; limit: number, links: any }> {
+  async findAll(
+    page = 1,
+    limit = 10,
+  ): Promise<{
+    data: Product[];
+    total: number;
+    page: number;
+    limit: number;
+    links: any;
+  }> {
     const [data, total] = await this.productRepository.findAndCount({
       skip: page > 0 ? (page - 1) * limit : 0,
       take: limit,
